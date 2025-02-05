@@ -1,4 +1,4 @@
-<!-- index.html -->
+<!-- templates/index.html -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,5 +10,10 @@
     <form action="/predict" method="post">
         <button type="submit">予想する</button>
     </form>
+
+    {% if predicted_numbers %}
+        <h2>予想結果:</h2>
+        <p>{{ predicted_numbers }}</p>
+    {% endif %}
 </body>
 </html>
