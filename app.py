@@ -21,3 +21,10 @@ def predict():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+    # 例: ダミーデータ
+PAST_DATA = {
+    1: 15, 2: 22, 3: 3, 4: 18, 5: 9,
+    # ... 全数字分の適当な値 ...
+    37: 11
+}
