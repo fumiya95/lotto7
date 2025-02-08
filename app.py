@@ -41,3 +41,16 @@ def generate_weighted_lotto7(past_data):
         if pick not in selected:
             selected.append(pick)
     return sorted(selected)
+
+def generate_weighted_lotto7(past_data):
+    # 1～37をリスト化
+    all_nums = list(LOTTO7_RANGE)
+    # past_data から対応するweightを作成 (なければ1とか)
+    weights = [past_data.get(num, 1) for num in all_nums]
+    # 重み付きで7つサンプル
+    selected = []
+    while len(selected) < LOTTO7_COUNT:
+        pick = random.choices(all_nums, weights=weights, k=1)[0]
+        if pick not in selected:
+            selected.append(pick)
+    return sorted(selected)
