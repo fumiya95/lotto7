@@ -54,3 +54,7 @@ def generate_weighted_lotto7(past_data):
         if pick not in selected:
             selected.append(pick)
     return sorted(selected)
+
+@app.errorhandler(404)
+def not_found(e):
+    return render_template("404.html"), 404
