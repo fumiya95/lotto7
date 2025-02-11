@@ -1,3 +1,13 @@
+import csv
+
+def load_past_data_from_csv(file_path):
+    past_data = {}
+    with open(file_path, 'r', encoding='utf-8') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            num, freq = int(row[0]), int(row[1])
+            past_data[num] = freq
+    return past_data
 # app.py
 from flask import Flask, render_template, request
 import random
