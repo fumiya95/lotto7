@@ -1,14 +1,15 @@
-<!-- index.html -->
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-<!-- templates/index.html -->
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
     <meta charset="utf-8">
     <title>ロト7予測機</title>
+    <!-- Flask の url_for で static/css/style.css を読み込む場合 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <h1>ロト7予測機</h1>
+    
+    <!-- 予測実行フォーム (POSTで/predictに送信) -->
     <form action="/predict" method="post">
         <button type="submit">予想する</button>
     </form>
@@ -17,6 +18,7 @@
         <h2>予想結果:</h2>
         <p>{{ predicted_numbers }}</p>
     {% endif %}
+
     <footer>
         <p>※本サービスは当選を保証するものではありません。自己責任でお楽しみください。</p>
     </footer>
