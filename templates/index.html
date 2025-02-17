@@ -3,14 +3,22 @@
 <head>
     <meta charset="utf-8">
     <title>ロト7予測機</title>
-    <!-- Flask の url_for で static/css/style.css を読み込む場合 -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <h1>ロト7予測機</h1>
-    
-    <!-- 予測実行フォーム (POSTで/predictに送信) -->
+    <p>※当選を保証するものではありません。エンタメ用です。</p>
+
+    <!-- 予測実行フォーム -->
     <form action="/predict" method="post">
+        <label>
+            <input type="radio" name="mode" value="random" checked>
+            完全ランダム
+        </label>
+        <label>
+            <input type="radio" name="mode" value="weighted">
+            過去データ重視(仮)
+        </label>
+        <br><br>
         <button type="submit">予想する</button>
     </form>
 
@@ -19,6 +27,7 @@
         <p>{{ predicted_numbers }}</p>
     {% endif %}
 
+    <hr>
     <footer>
         <p>※本サービスは当選を保証するものではありません。自己責任でお楽しみください。</p>
     </footer>
