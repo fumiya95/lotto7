@@ -17,11 +17,15 @@ def load_past_data_from_csv(file_path):
     # 1～37 の数字をキーに、出現回数を0で初期化
     past_data = {i: 0 for i in range(1, 38)}
     
-    with open(file_path, 'r', encoding='utf-8') as f:
+    # ▼【重要】CSVファイルの文字コードに応じて、encodingを変える▼
+    # Excelで保存したCSV → "cp932" (Shift_JIS)
+    # UTF-8 BOM付き → "utf-8-sig"
+    # BOMなしUTF-8 → "utf-8"
+    with open(file_path, 'r', encoding='cp932') as f:
         reader = csv.DictReader(f)
         for row in reader:
-            for i in range(1, 8):  # 1～7
-                # CSVの列名に合わせる（全角数字に注意）
+            for i in range(1, 8):
+                # CSVの列名が「抽せん数字１」など 全角数字に注意
                 column_name = f"抽せん数字{i}"
                 if column_name in row:
                     val = row[column_name]
@@ -45,7 +49,7 @@ def generate_weighted_lotto7(past_data):
     例: 多く出現している数字ほど選ばれやすい。
     """
     all_nums = list(LOTTO7_RANGE)
-    weights = [past_data.get(num, 1) for num in all_nums]  # 過去データがなければ1
+    weights = [past_data.get(num, 1) for num in all_nums]  # 出現回数が高いほど選ばれやすい
     selected = []
     while len(selected) < LOTTO7_COUNT:
         pick = random.choices(all_nums, weights=weights, k=1)[0]
@@ -64,13 +68,14 @@ def index():
 def predict():
     """
     予想ボタン押下時に呼ばれるエンドポイント
-    - mode: ラジオボタンかhiddenなどで切り替え可能 (例: random or weighted)
     """
+    # フォームから mode を受け取り、ランダムか重み付きかを選択
     mode = request.form.get("mode", "random")
-    
-    # CSVファイルから過去出現回数をロード (必要に応じてキャッシュしても可)
+
+    # CSVファイルから過去出現回数をロード
     past_data = load_past_data_from_csv("Loto 7 Results.csv")
 
+    # モードに応じて予想数字を生成
     if mode == "weighted":
         numbers = generate_weighted_lotto7(past_data)
     else:
